@@ -1,0 +1,14 @@
+.login-button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 25px;
+}
+
+.center-div {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-height: 500px;
+    min-width: 600px;
+}

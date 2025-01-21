@@ -1,0 +1,166 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#main {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+}
+
+#app {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.game {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 80vw;
+    margin: 0 auto;
+    flex-direction: row;
+}
+
+.game-board {
+    border: 2px solid #333;
+    border-radius: 5px;
+    padding: 20px;
+    background-color: #f0f0f0;
+    height: 80vh;
+    width: 80vh;
+    max-height: 80vw;
+    max-width: 80vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.board {
+    width: 100%;
+    height: 100%;
+}
+
+.board-row {
+    display: flex;
+    height: calc(100% / 3);
+}
+
+.square {
+    flex: 1;
+    font-size: calc(5vw + 5vh);
+    margin: 2px;
+    background-color: #fff;
+    border: 1px solid #999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.status {
+    font-size: 16px;
+}
+
+.game-info {
+    font-size: 16px;
+}
+
+.game-info-list {
+    margin: 10px;
+}
+
+.chat-container {
+    min-width: 20vw;
+    max-width: 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100%;
+    padding: 10px;
+    overflow: auto;
+    box-sizing: border-box;
+}
+
+.messages {
+    flex-shrink: 0;
+    flex-grow: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column-reverse;
+    width: 100%;
+    max-height: 75%;
+}
+
+.message-item {
+    background-color: #e9e9e9;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 15px;
+}
+
+.input-container {
+    margin-right: 20px;
+    flex-shrink: 0;
+}
+
+.input-container input {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.input-container button {
+    flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+    .game {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .chat-container {
+        order: 3;
+        margin-top: 20px;
+        max-width: 80%;
+    }
+}
+
+@media (min-width: 769px) {
+    .game {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .chat-container {
+        order: 3;
+        margin-left: 20px;
+        max-width: 30%;
+    }
+}
+
+@media (max-width: 920px) and (max-aspect-ratio: 1/1) {
+    .game {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .game-board {
+        height: 75vh;
+        width: 75vw;
+    }
+
+    .chat-container {
+        order: 3;
+        margin-top: 20px;
+        max-width: 80%;
+        height: 25vh;
+    }
+}

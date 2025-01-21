@@ -1,0 +1,35 @@
+.container-fluid-custom {
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr;
+    grid-gap: 0;
+}
+
+.box {
+    background-color: white;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+    height: 100vh;
+    border: 1px solid black;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.box:nth-child(odd) {
+    background-color: black;
+    color: white;
+}
+
+.box:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+}
+
+.box a {
+    color: inherit;
+    text-decoration: none;
+}

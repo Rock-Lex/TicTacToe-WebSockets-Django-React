@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <link rel="stylesheet" href="{% static "css/core/games.css" %}">
+
+    <div class="container-fluid-custom">
+        <div class="box"><a href="{% url 'frontend:tictactoe' %}">TicTacToe</a></div>
+        <div class="box"><span>Coming soon..</span></div>
+        <div class="box"><span>Coming soon..</span></div>
+    </div>
+{% endblock %}

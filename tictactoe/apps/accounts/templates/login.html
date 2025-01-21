@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <link rel="stylesheet" href="{% static "css/accounts/accounts.css" %}">
+    <div class="center-div">
+        <div class="text-center">
+
+            <div class="container text-center ">
+                <img src="{% static 'images/tic-tac-toe-logo.png' %}" alt="Logo" class="" width="150" height="150">
+            </div>
+
+
+            <h2>Welcome to TicTacToe</h2>
+            <h3 style="color: cornflowerblue">{% if Info %}{{ Info }}{% endif %}</h3>
+        </div>
+
+        <form method="post" class="container"> {% csrf_token %}
+            <div class="">
+                <input type="text" id="inputUsername" name="username" placeholder="username" style="margin-top: 35px; color: #000; width: 100%; padding: 8px;" required>
+            </div>
+
+            <div class="">
+                <input type="password" id="inputPassword" name="password" placeholder="password" style="margin-top: 20px; color: #000; width: 100%; padding: 8px;" required>
+            </div>
+
+            {% for field in login_form %}
+                <p>
+                    {% for error in field.errors %}
+                        <p style="color: red"> {{ error }} </p>
+                    {% endfor %}
+                </p>
+            {% endfor %}
+            {% if login_form.non_field_errors %}
+                <div style="color: red">
+                    <p>{{ login_form.non_field_errors }}</p>
+                </div>
+            {% endif %}
+
+            <button type="submit" class="btn btn-outline-white login-button" >Login</button>
+
+        </form>
+    </div>
+{% endblock %}
