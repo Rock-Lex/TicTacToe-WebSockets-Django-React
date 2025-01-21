@@ -13,10 +13,11 @@ pillow
 django-bootstrap-v5
 python-dotenv~=1.0.1
 selenium~=4.27.1
-daphne
 
 icecream
 colorlog
 
 redis~=5.2.1
 asgiref~=3.8.1
+
+daphne # Supports ASGI and WSGI

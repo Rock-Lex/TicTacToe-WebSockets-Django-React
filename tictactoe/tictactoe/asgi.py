@@ -8,12 +8,17 @@ https://docs.djangoproject.com/en/5.0/howto/deployment/asgi/
 """
 
 import os
-from django.core.asgi import get_asgi_application
-from channels.routing import ProtocolTypeRouter, URLRouter
-from channels.auth import AuthMiddlewareStack
-from apps.core import routing as core_routing
+import django
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tictactoe.settings')
+django.setup()
+
+from django.core.asgi import get_asgi_application
+from apps.core import routing as core_routing
+from channels.routing import ProtocolTypeRouter, URLRouter
+from channels.auth import AuthMiddlewareStack
+
+
 
 
 application = ProtocolTypeRouter({
