@@ -21,9 +21,9 @@ DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
 ALLOWED_HOSTS = [f"{os.getenv('ALLOWED_HOSTS', 'localhost')}",]
 
 if DEBUG:
-    CSRF_TRUSTED_ORIGINS = [get_ipaddress()]
+    CSRF_TRUSTED_ORIGINS = [origin.strip() for origin in os.getenv('CSRF_TRUSTED_ORIGINS', '').split(',') if origin.strip()]
 else:
-    CSRF_TRUSTED_ORIGINS = ['http:/192.168.2.101']
+    CSRF_TRUSTED_ORIGINS = [origin.strip() for origin in os.getenv('CSRF_TRUSTED_ORIGINS', '').split(',') if origin.strip()]
 
 """
 CORS
@@ -32,6 +32,10 @@ CORS_ALLOWED_ORIGINS = [origin.strip() for origin in os.getenv('CORS_ALLOWED_ORI
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 
+
+print(ALLOWED_HOSTS)
+print(CSRF_TRUSTED_ORIGINS)
+print(CORS_ALLOWED_ORIGINS)
 
 """
 Apps
@@ -74,7 +78,7 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            'hosts': [f"redis://{os.getenv('REDIS_HOST')}:{os.getenv('REDIS_PORT')}"]
+            'hosts': [f"redis://{os.getenv('REDIS_HOST', 'redis')}:{os.getenv('REDIS_PORT', '6379')}"]
         },
     },
 }
@@ -83,10 +87,10 @@ CHANNEL_LAYERS = {
 """
 Celery configuration
 """
-CELERY_BROKER_URL = f"redis://{os.getenv('REDIS_HOST')}:{os.getenv('REDIS_PORT')}/{os.getenv('REDIS_DB')}"
+CELERY_BROKER_URL = f"redis://{os.getenv('REDIS_HOST', 'redis')}:{os.getenv('REDIS_PORT', 6379)}/{os.getenv('REDIS_DB', 0)}"
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_BACKEND = f"redis://{os.getenv('REDIS_HOST')}:{os.getenv('REDIS_PORT')}/{os.getenv('REDIS_DB')}"
+CELERY_RESULT_BACKEND = f"redis://{os.getenv('REDIS_HOST', 'redis')}:{os.getenv('REDIS_PORT', 6379)}/{os.getenv('REDIS_DB', 0)}"
 
 CELERY_BEAT_SCHEDULE = {
     'delete_unused_gamerooms_every_2_hours': {
@@ -107,9 +111,9 @@ if DEBUG:
 Redis configuration
 """
 REDIS_CONFIG = {
-    'host': f"{os.getenv('REDIS_HOST')}",
-    'port': f"{os.getenv('REDIS_PORT')}",
-    'db': f"{os.getenv('REDIS_DB')}",
+    'host': f"{os.getenv('REDIS_HOST', 'redis')}",
+    'port': f"{os.getenv('REDIS_PORT', 6379)}",
+    'db': f"{os.getenv('REDIS_DB', 0)}",
     'decode_responses': True,
 }
 
@@ -216,7 +220,7 @@ else:
     DATABASES= {
         'default': {
             'ENGINE': os.environ.get('SQL_ENGINE', 'django.db.backends.sqlite3'),
-            'NAME': os.emviron.get('SQL_DATABASE', BASE_DIR / 'db.sqlite3'),
+            'NAME': os.environ.get('SQL_DATABASE', BASE_DIR / 'db.sqlite3'),
             'USER': os.environ.get('SQL_USER', 'admin'),
             'PASSWORD': os.environ.get('SQL_PASSWORD', 'password'),
             'HOST': os.environ.get('SQL_HOST', 'localhost'),

@@ -2,13 +2,15 @@ version: '3.8'
 
 services:
   web:
+    environment:
+      - DJANGO_SETTINGS_MODULE=tictactoe.settings
     build:
       context: .
       dockerfile: Dockerfile.prod
     command: daphne -b 0.0.0.0 -p 8001 tictactoe.asgi:application
     volumes:
-      - static_volume:/home/app/web/staticfiles
-      - media_volume:/home/app/web/mediafiles
+      - static_volume:/home/app/web/tictactoe/staticfiles
+      - media_volume:/home/app/web/tictactoe/mediafiles
     expose:
       - 8001
     env_file:
@@ -27,8 +29,9 @@ services:
   nginx:
     build: ./nginx
     volumes:
-      - static_volume:/home/app/web/staticfiles
-      - media_volume:/home/app/web/mediafiles
+      - static_volume:/home/app/web/tictactoe/staticfiles
+      - media_volume:/home/app/web/tictactoe/mediafiles
+#      - .nginx/ssl:/home/app/web/nginx/ssl
     ports:
       - 80:80
       - 443:443
@@ -40,6 +43,28 @@ services:
     volumes:
       - redis_volume:/data
     restart: always
+  celery:
+    build:
+      context: .
+    command: celery --app tictactoe worker --loglevel=info
+    depends_on:
+      - db
+      - redis
+    restart: always
+    working_dir: /home/app/web/tictactoe
+    volumes:
+      - ./tictactoe:/home/app/web/tictactoe
+  celery-beat:
+    build:
+      context: .
+    command: celery --app=tictactoe beat --loglevel=info
+    depends_on:
+      - db
+      - redis
+    restart: always
+    working_dir: /home/app/web/tictactoe
+    volumes:
+      - ./tictactoe:/home/app/web/tictactoe
 volumes:
   postgres_data:
   static_volume:
