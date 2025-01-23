@@ -144,7 +144,8 @@ export default class RouterPage extends Component {
 
     getSearchQueueSocketURL() {
         const { jwtToken, sessionKey } = this.state;
-        return `ws://${window.location.host}/ws/search-queue/${jwtToken}/${sessionKey}/`;
+        const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
+        return `${protocol}://${window.location.host}/ws/search-queue/${jwtToken}/${sessionKey}/`;
     }
 
     handleRefreshButtonClicked = async () => {

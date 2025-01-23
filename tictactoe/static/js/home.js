@@ -4,7 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentSort = 'desc';   // Default sort order
 
     // WebSocket setup
-    let url = `ws://${window.location.host}/ws/main-chat-socket/`;
+    const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
+    let url = `${protocol}://${window.location.host}/ws/main-chat-socket/`;
     const chatSocket = new WebSocket(url);
 
     chatSocket.onopen = function () {

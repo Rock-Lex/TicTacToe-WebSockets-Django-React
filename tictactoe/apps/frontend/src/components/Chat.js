@@ -8,7 +8,8 @@ const Chat = ({ roomCode }) => {
     const chatSocketRef = useRef(null);
 
     useEffect(() => {
-        chatSocketRef.current = new WebSocket(`ws://${window.location.host}/ws/${roomCode}/chat-socket/`);
+        const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
+        chatSocketRef.current = new WebSocket(`${protocol}://${window.location.host}/ws/${roomCode}/chat-socket/`);
 
         chatSocketRef.current.onopen = () => {
             chatSocketRef.current.send(JSON.stringify({ type: 'latest_messages_request' }));

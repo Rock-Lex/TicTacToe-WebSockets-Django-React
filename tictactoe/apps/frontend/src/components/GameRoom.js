@@ -99,7 +99,7 @@ export default class GameRoom extends Component {
             isReadyPlayer_x: false,
             isReadyPlayer_o: false,
             isGameStarted: false,
-            xIsNext: 'x'
+            xIsNext: 'x',
         };
         this.gameRoomCode = this.props.gameRoomCode;
     }
@@ -130,7 +130,8 @@ export default class GameRoom extends Component {
     }
 
     connectToRoomWebSocket() {
-        const wsRoomUrl = `ws://${window.location.host}/ws/tictactoe-game-socket/${this.gameRoomCode}/`;
+        const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
+        const wsRoomUrl = `${protocol}://${window.location.host}/ws/tictactoe-game-socket/${this.gameRoomCode}/`;
         this.roomSocket = new WebSocket(wsRoomUrl);
 
         this.roomSocket.onmessage = this.handleWebSocketMessage.bind(this);
