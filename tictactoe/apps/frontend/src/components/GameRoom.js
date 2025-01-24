@@ -140,7 +140,6 @@ export default class GameRoom extends Component {
 
     handleWebSocketMessage(e) {
         const data = JSON.parse(e.data);
-        console.log(data)
         switch (data.type) {
             case "game_state":
                 const history = [...this.state.history];
